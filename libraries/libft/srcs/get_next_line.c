@@ -1,47 +1,6 @@
 
 #include <libft.h>
 
-char	*ft_strjoin(const char *s1, const char *s2)
-{
-	char	*dst;
-	char	*ret;
-
-	dst = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	ret = dst;
-	dst = ft_memcpy(dst, s1, ft_strlen(s1));
-	dst += ft_strlen(s1);
-	dst = ft_memcpy(dst, s2, ft_strlen(s2));
-	dst += ft_strlen(s2);
-	*dst = '\0';
-	return (ret);
-}
-
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	if (n == 0)
-		return (NULL);
-	while (--n > 0 && *(unsigned char *)s != (unsigned char)c)
-		s++;
-	if (n == 0 && *(unsigned char *)s != (unsigned char)c)
-		return (NULL);
-	else
-		return ((void *)s);
-}
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	void	*ret;
-
-	if (!src && !dst)
-		return (NULL);
-	ret = dst;
-	while (n-- > 0)
-		*(unsigned char *)dst++ = *(unsigned char *)src++;
-	return (ret);
-}
-
 int	la_norme_cette_sale_grande_tante(int fd, char **r, char **eol)
 {
 	char		buf[BUFFER_SIZE + 1];
@@ -68,7 +27,7 @@ int	la_norme_cette_sale_grande_tante(int fd, char **r, char **eol)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*r;
+	static char	*r = NULL;
 	ssize_t		read_ret;
 	char		*tmp;
 	char		*eol;

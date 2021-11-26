@@ -13,7 +13,7 @@ SRC_PATH = ./srcs/
 LFT_NAME = libft.a
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = minishell.h
-SRC_NAME = 
+SRC_NAME = minishell.c ms_parse.c
 
 LFT = $(addprefix $(LFT_PATH),$(LFT_NAME))
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
