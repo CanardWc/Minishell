@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <libft.h>
-#include <stdio.h>
 
 size_t	ft_arr_size(const char *s, char c)
 {

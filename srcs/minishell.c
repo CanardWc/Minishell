@@ -30,12 +30,14 @@ int	main(int ac, char **av, char **env)
 		ms_parse(&data);
 		if (data.args)
 		{
-			for (int i = 0; data.args[i]; i++)
+			for (t_list *tmp = data.args; tmp; tmp = tmp->next)
 			{
-				printf("arg[%d] = %s\n", i, data.args[i]);
-				free(data.args[i]);
+				ft_printf("node\n");
+				char **tmp2 = (char **)tmp->content;
+				for (int i = 0; tmp2[i]; i++)
+					ft_printf("arg[%d] = %s\n", i, tmp2[i]);
 			}
-			free(data.args);
+			ft_lstclear(&data.args, &ms_clear_node);
 			data.args = NULL;
 		}
 		//ms_treat_line(&data);

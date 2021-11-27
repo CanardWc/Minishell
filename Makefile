@@ -13,7 +13,8 @@ SRC_PATH = ./srcs/
 LFT_NAME = libft.a
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = minishell.h
-SRC_NAME = minishell.c ms_parse.c
+SRC_NAME = minishell.c ms_parse.c ms_utils/ms_clear_node.c \
+	   ms_utils/ms_parse_split.c
 
 LFT = $(addprefix $(LFT_PATH),$(LFT_NAME))
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
@@ -37,6 +38,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH)ms_utils/ 2> /dev/null || true
 
 clean:
 	@make clean -C $(LFT_PATH)

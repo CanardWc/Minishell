@@ -1,88 +1,61 @@
 #include <minishell.h>
 
-static int	ms_count_args(char *line)
+static void	ms_free_nodes(t_data *data)
 {
-	int	args_count;
-	char	indic;
-
-	args_count = 0;
-	while (line && *line)
-	{
-		if (*line == '\"' || *line == '\'')
-			indic = *line;
-		else if (*line != ' ')
-			indic = ' ';
-		if (*line != ' ')
-		{
-			line++;
-			if (indic == '\"' || indic == '\'')
-				if (!ft_memchr(line, indic, ft_strlen(line)))
-				return (0);
-			line = ft_memchr(line, indic, ft_strlen(line));
-			args_count++;
-		}
-		if (line && *line)
-			line++;		
-	}
-	return (args_count);
+	ft_lstclear(&data->args, &ms_clear_node);
 }
 
-static char	*ms_fill_arg_line(char *line, char c)
+static void	ms_add_node(t_data *data, char *s)
 {
-	char	*eoc;
-	char	*ret;
+	t_list	*node;
+	char	**content;
 
-	eoc = ft_memchr(line + 1, c, ft_strlen(line));
-	ret = ft_substr(line, 0, (eoc - line));
-	if (!ret)
+	if (!s)
 		ms_error();
-	return (ret);
+	ms_parse_split(s, &content);
+	if (!content)
+		ms_error();
+	node = ft_lstnew(content);
+	if (!node)
+		ms_error();
+	ft_lstadd_back(&data->args, node);
+	free(s);
 }
 
-static void	ms_fill_args(t_data *data, char *line, int args_count)
+static void	ms_get_args(t_data *data, char *s)
 {
 	int	i;
-	char	indic;
+	char	*tmp;
 
 	i = 0;
-	while (line && *line && i < args_count)
+	if (ft_strchr("<>|", s[i]))
+		i += 1 + (ft_strchr("<>", s[i]) && s[i + 1] == s[i]);
+	else
 	{
-		if (*line == '\"')
-			indic = *line;
-		else if (*line == '\'')
-			indic = *line;
-		else if (*line != ' ')
-			indic = ' ';
-		if (*line != ' ')
+		while (s[i] && !ft_strchr("|<>", s[i]))
 		{
-			data->args[i] = ms_fill_arg_line(line, indic);
-			line++;
-			line = ft_memchr(line, indic, ft_strlen(line));
+			if (ft_strchr("\'\"", s[i]))
+			{
+				tmp = s + i + 1;
+				if (!ft_memchr(tmp, s[i], ft_strlen(tmp)))
+					return (ms_free_nodes(data));
+				i = (char *)ft_memchr(tmp, s[i], \
+						ft_strlen(tmp)) - s;
+			}
 			i++;
 		}
-		if (line && *line)
-			line++;
 	}
-	data->args[i] = NULL;
+	ms_add_node(data, ft_substr(s, 0, i));
+	if (*(s + i))
+		ms_get_args(data, s + i);
 }
 
 void	ms_parse(t_data *data)
 {
-	int	ret;
-	int	args_count;
 	char	*line;
 
-	ret = 0;
 	if (get_next_line(0, &line) < 0)
 		ms_error();
-	args_count = ms_count_args(line);
-	ft_printf("args_count = %d\n", args_count);
-	if (args_count != 0)
-	{
-		data->args = (char **)malloc(sizeof(char *) * (args_count + 1));
-		if (!data->args)
-			ms_error();
-		ms_fill_args(data, line, args_count);
-	}
+	ms_get_args(data, line);
 	free(line);
 }
