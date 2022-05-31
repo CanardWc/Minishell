@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-static void	ms_free_nodes(t_data *data)
+void	ms_free_nodes(t_data *data)
 {
 	ft_lstclear(&data->args, &ms_clear_node);
 }
@@ -20,6 +20,17 @@ static void	ms_add_node(t_data *data, char *s)
 		ms_error();
 	ft_lstadd_back(&data->args, node);
 	free(s);
+}
+
+int	ms_check_void(char *s, int i)
+{
+	int y;
+
+	y = 0;
+	while (y < i)
+		if (s[y++] != ' ')
+			return (1);
+	return (0);
 }
 
 static void	ms_get_args(t_data *data, char *s)
@@ -45,7 +56,8 @@ static void	ms_get_args(t_data *data, char *s)
 			i++;
 		}
 	}
-	ms_add_node(data, ft_substr(s, 0, i));
+	if (ms_check_void(s, i))
+		ms_add_node(data, ft_substr(s, 0, i));
 	if (*(s + i))
 		ms_get_args(data, s + i);
 }

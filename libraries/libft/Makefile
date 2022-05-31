@@ -20,7 +20,7 @@ SRC_NAME = ft_atoi.c ft_strdup.c ft_bzero.c ft_putnbr_fd.c ft_strjoin.c \
 		ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
 		ft_lstmap.c ft_putmem_fd.c ft_putnbr_base_fd.c ft_atoi_base.c \
-		get_next_line.c \
+		ft_strcmp.c get_next_line.c \
 		ft_printf/ft_printf.c \
 		ft_printf/utils/ft_search.c \
 		ft_printf/utils/ft_round_dbl.c \

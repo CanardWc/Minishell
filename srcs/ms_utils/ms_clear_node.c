@@ -3,15 +3,13 @@
 void	ms_clear_node(void *content)
 {
 	char	**tmp;
-	char	**ret;
 
-	ret = (char **)content;
-	tmp = ret;
+	tmp = (char **)content;
 	while (*tmp)
 	{
 		free(*tmp);
 		*tmp++ = NULL;
 	}
-	free(ret);
-	ret = NULL;
+	free(content);
+	content = NULL;
 }

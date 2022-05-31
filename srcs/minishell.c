@@ -11,7 +11,8 @@ t_data	ms_init_data(char **env)
 	t_data	data;
 
 	data.args = NULL;
-	data.env = env;
+	data.env = ms_build_env(env);
+	data.var = NULL;
 	data.exit = 0;
 	return (data);
 }
@@ -35,14 +36,17 @@ int	main(int ac, char **av, char **env)
 				ft_printf("node\n");
 				char **tmp2 = (char **)tmp->content;
 				for (int i = 0; tmp2[i]; i++)
-					ft_printf("arg[%d] = %s\n", i, tmp2[i]);
+					ft_printf("arg[%d] = |%s|\n", i, tmp2[i]);
+			}
+			if (!ms_treat_line(&data))
+			{
+				ms_add_variable(&data);
+				ms_exec_line(&data);
 			}
 			ft_lstclear(&data.args, &ms_clear_node);
 			data.args = NULL;
 		}
-		//ms_treat_line(&data);
-		//ms_exec_line(&data);
-		//free(data.args);
 	}
+	//free $ variable;
 	return (0);
 }
