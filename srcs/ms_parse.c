@@ -68,6 +68,7 @@ void	ms_parse(t_data *data)
 
 	if (get_next_line(0, &line) < 0)
 		ms_error();
-	ms_get_args(data, line);
+	if (*line)
+		ms_get_args(data, line);
 	free(line);
 }

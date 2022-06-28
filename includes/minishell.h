@@ -19,6 +19,9 @@ typedef struct	s_data
 	t_list	*args;
 	t_list	*env;
 	t_list	*var;
+
+	char	**true_env;
+
 	int	exit;
 }	t_data;
 
@@ -43,9 +46,9 @@ void	ms_cmd_echo(t_data *data, char **line);
 void	ms_cmd_cd(t_data *data, char **line);
 void	ms_cmd_pwd(t_data *data, char **line);
 void	ms_cmd_export(t_data *data, char **line);
-//void	ms_cmd_unset(t_data *data, char **line);
+void	ms_cmd_unset(t_data *data, char **line);
 void	ms_cmd_env(t_data *data, char **line);
 void	ms_cmd_exit(t_data *data, char **line);
-//void	ms_cmd_exec(t_data *data, char **line);
+void	ms_cmd_exec(t_data *data, char **line);
 
 #endif

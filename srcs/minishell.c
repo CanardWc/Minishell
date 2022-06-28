@@ -11,6 +11,7 @@ t_data	ms_init_data(char **env)
 	t_data	data;
 
 	data.args = NULL;
+	data.true_env = ft_split(getenv("PATH"), ':');
 	data.env = ms_build_env(env);
 	data.var = NULL;
 	data.exit = 0;

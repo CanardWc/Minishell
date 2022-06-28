@@ -14,27 +14,39 @@ static void	ms_no_args(t_data *data)
 	}
 }
 
+static t_list	*ms_replace(t_list *lst, t_list *node)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	if (lst == node)
+		lst = lst->next;
+	else
+	{
+		while (tmp && tmp->next)
+		{
+			if (tmp->next == node)
+				tmp->next = tmp->next->next;
+			tmp = tmp->next;
+		}
+	}
+	node->next = NULL;
+	return (lst);
+}
+
 static void	ms_args(t_data *data, char **line)
 {
 	t_list	*tmp;
-	t_list	*rpl;
+	t_env	*env;
 
 	tmp = data->var;
-	rpl = NULL;
 	while (tmp && *line)
 	{
-		if (ft_strcmp(((t_env *)(tmp->content))->key, *line))
+		env = tmp->content;
+		if (!ft_strcmp(env->key, *line))
 		{
 			ft_lstadd_back(&data->env, tmp);
-			if (tmp == data->var)
-				data->var = NULL;
-			else
-			{
-				rpl = data->var;
-				while (rpl->next != tmp)
-					rpl = rpl->next;
-				rpl->next = tmp->next;
-			}
+			data->var = ms_replace(data->var, tmp);
 			tmp = data->var;
 			line++;
 		}

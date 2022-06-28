@@ -35,17 +35,17 @@ static t_env	*ms_lstsearch(t_list *lst, char *name)
 	return (NULL);
 }
 
-static void	ms_search_and_add(t_data *data)
+static int	ms_search_and_add(t_data *data)
 {
-	char	**src = NULL;
-	char	*mark = NULL;
-	char	*key = NULL;
+	char	**src;
+	char	*mark;
+	char	*key;
 
 	src = data->args->content;
 	while (*src)
 	{
 		mark = ft_strchr(*src, '=');
-		if (mark)
+		if (**src != '\'' && **src != '\"' && mark)
 		{
 			key = ft_substr(*src, 0, mark - *src);
 			if (ms_lstsearch(data->env, key))
@@ -58,14 +58,18 @@ static void	ms_search_and_add(t_data *data)
 			free(key);
 		}
 		else
-			return ;
+			return (src - (char **)(data->args->content));
 		src++;
 	}
+	return (src - (char **)(data->args->content));
 }
 
 void		ms_add_variable(t_data *data)
 {
 	t_list	*tmp;
+	char	**src;
+	int	ret;
+	int	i;
 
 	tmp = data->args;
 	while (tmp)
@@ -74,10 +78,27 @@ void		ms_add_variable(t_data *data)
 			return ;
 		tmp = tmp->next;
 	}
-	ms_search_and_add(data);
-	for (t_list *oui=data->var; oui; oui=oui->next)
+	ret = ms_search_and_add(data);
+	i = 0;
+	src = data->args->content;
+	while (i < ret)
 	{
-		t_env	*ah = oui->content;
-		ft_printf("key = [%s] value = [%s]\n", ah->key, ah->value);
+	//	ft_printf("oui\n");
+		free(src[i++]);
 	}
+	while (ret && src[i])
+	{
+	//	ft_printf("cooucou\n", ret);
+		*src = src[i];
+		src++;
+	}
+	if (ret)
+		*src = 0;
+	//ft_printf("ret = %d\n", ret);
+	//ft_printf("len = %d\n", ft_strlen((char *)(data->args->content)));
+	//for (t_list *oui=data->var; oui; oui=oui->next)
+	//{
+	//	t_env	*ah = oui->content;
+	//	ft_printf("key = [%s] value = [%s]\n", ah->key, ah->value);
+	//}
 }

@@ -2,60 +2,72 @@
 
 static void	ms_free_node(t_list *node)
 {
+	t_env	*env;
+
+	env = node->content;
+	free(env->key);
+	env->key = NULL;
+	free(env->value);
+	env->value = NULL;
+	free(env);
+	env = NULL;
+	node->next = NULL;
+	free(node);
 }
 
-static int	ms_check_lst(t_list **lst, char *str)
+static t_list	*ms_replace_node(t_list *lst, t_list *node)
 {
-	t_list	*tmp;
-	t_env	*env;
-	int	ret;
+	t_list	*ret;
 
-	tmp = lst;
-	ret = 0;
-	while (tmp)
+	ret = lst;
+	if (lst == node)
+		ret = ret->next;
+	else
 	{
-		env = tmp->content;
-		if (!ft_strcmp(env->key, str))
+		while (lst && lst->next)
 		{
-			if (tmp = lst && !tmp->next)
-				ret = 3;
-			else if (tmp = lst)
-				ret = 2;
-			else
+			if (lst->next == node)
 			{
-				while (lst->next != tmp)
-					lst = lst->next;
-				lst->next = tmp->next;
-				ret = 1;
+				lst->next = lst->next->next;
+				return (ret);
 			}
-			ms_free_node(tmp)
+			lst = lst->next;
 		}
-		else
-			tmp = tmp->next;
 	}
 	return (ret);
 }
 
+static t_list	*ms_search_node(t_list *lst, char *str)
+{
+	t_env	*env;
+
+	while (lst)
+	{
+		env = lst->content;
+		if (!ft_strcmp(env->key, str))
+			return (lst);
+		lst = lst->next;
+	}
+	return (0);
+}
+
 void		ms_cmd_unset(t_data *data, char **line)
 {
-	t_list	*tmp_env;
-	t_list	*tmp_var;
-	int	ret;
+	t_list	*node;
 
-	tmp_env = data->env;
-	tmp_var = data->var;
-	while (*line)
+	while (*++line)
 	{
-		ret = ms_check_lst(&data->env, *line);
-		if (ret == 3)
-			data->env = NULL;
-		else if (ret == 2)
-			data->env = data->env->next;
-		ret = ms_check_lst(data->var, *line);
-		if (ret == 3)
-			data->var = NULL;
-		else if (ret == 2)
-			data->var = data->var->next;
-		line++;	
+		node = ms_search_node(data->env, *line);
+		if (node)
+		{
+			data->env = ms_replace_node(data->env, node);
+			ms_free_node(node);
+		}
+		node = ms_search_node(data->var, *line);
+		if (node)
+		{
+			data->var = ms_replace_node(data->var, node);
+			ms_free_node(node);
+		}
 	}
 }

@@ -19,7 +19,8 @@ SRC_NAME = minishell.c ms_parse.c ms_utils/ms_clear_node.c \
 	   ms_exec_line.c ms_utils/ms_build_env.c \
 	   ms_pwd/ms_cmd_pwd.c ms_cd/ms_cmd_cd.c \
 	   ms_echo/ms_cmd_echo.c ms_env/ms_cmd_env.c \
-	   ms_exit/ms_cmd_exit.c ms_export/ms_cmd_export.c
+	   ms_exit/ms_cmd_exit.c ms_export/ms_cmd_export.c \
+	   ms_unset/ms_cmd_unset.c ms_exec/ms_cmd_exec.c
 
 LFT = $(addprefix $(LFT_PATH),$(LFT_NAME))
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
@@ -50,6 +51,8 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)ms_env/ 2> /dev/null || true
 	@mkdir $(OBJ_PATH)ms_exit/ 2> /dev/null || true
 	@mkdir $(OBJ_PATH)ms_export/ 2> /dev/null || true
+	@mkdir $(OBJ_PATH)ms_unset/ 2> /dev/null || true
+	@mkdir $(OBJ_PATH)ms_exec/ 2> /dev/null || true
 
 clean:
 	@make clean -C $(LFT_PATH)
