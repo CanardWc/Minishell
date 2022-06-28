@@ -20,23 +20,40 @@ void	ms_find_cmd(t_data *data, char **line)
 		g_cmds[k].fct(data, line);
 	else
 	{
-		child = fork();
-		if (child == 0)
+		if (!data.pipes)
+		{
+			child = fork();
+			if (child == 0)
+				g_cmds[7].fct(data, line);
+			waitpid(child, &status, 0);
+		}
+		else
 			g_cmds[7].fct(data, line);
-		waitpid(child, &status, 0);
 	}
 }
 
 void	ms_exec_line(t_data *data)
 {
 	t_list	*tmp;
+	int		pipe_count;
 
 	tmp = data->args;
-	//if (tmp.pipes)
-	//	ms_pipe_launcher(tmp);
+	pipe_count = 0;
 	while (tmp)
 	{
-		ms_find_cmd(data, tmp->content);
+		if (**(tmp->content) == '|')
+			pipe_count++;
 		tmp = tmp->next;
+	}
+	tmp = data->args;
+	if (pipe_count)
+		ms_pipe_launcher(data, pipe_counti + 1);
+	else
+	{
+		while (tmp)
+		{
+			ms_find_cmd(data, tmp->content);
+			tmp = tmp->next;
+		}
 	}
 }
