@@ -6,7 +6,7 @@ void	ms_cmd_echo(t_data *data, char **line)
 
 	tnl = 0;
 	line++;
-	if (!*line)
+	if (!*line || !**line)
 		ft_printf("\n");
 	else
 	{
@@ -24,5 +24,5 @@ void	ms_cmd_echo(t_data *data, char **line)
 		if (!tnl)
 			ft_printf("\n");
 	}
-	data = 0;
+	data->exit_status = 0;
 }

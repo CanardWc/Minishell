@@ -8,6 +8,6 @@ void	ms_cmd_pwd(t_data *data, char **line)
 		ft_printf("%s\n", cwd);
 	else
 		ms_error();
-	data = 0;
+	data->exit_status = 0;
 	line = 0;
 }

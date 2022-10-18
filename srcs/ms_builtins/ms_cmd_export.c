@@ -61,4 +61,5 @@ void	ms_cmd_export(t_data *data, char **line)
 		ms_no_args(data);
 	else
 		ms_args(data, ++line);
+	data->exit_status = 0;
 }

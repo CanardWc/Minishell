@@ -6,13 +6,13 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 13:52:50 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/23 13:55:33 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 17:33:41 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int		ft_isprint(int c)
+int	ft_isprint(int c)
 {
 	if (32 <= c && c <= 126)
 		return (1);

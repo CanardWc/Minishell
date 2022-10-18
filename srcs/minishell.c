@@ -6,48 +6,57 @@ void	ms_error(void)
 	exit(0);
 }
 
-t_data	ms_init_data(char **env)
+static t_data	ms_init_data(char **env)
 {
 	t_data	data;
 
-	data.args = NULL;
+	data.pipe_count = 0;
+	data.std_in = dup(0);
+	data.std_out = dup(1);
+	data.tokens = NULL;
 	data.true_env = ft_split(getenv("PATH"), ':');
 	data.env = ms_build_env(env);
 	data.var = NULL;
+	data.exit_status = 0;
 	data.exit = 0;
 	return (data);
 }
 
-int	main(int ac, char **av, char **env)
+static void	ms_refresh_values(t_data data)
+{
+	close(0);
+	dup(data.std_in);
+	close(1);
+	dup(data.std_out);
+}
+
+int		main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	if (ac != 1)
-		return (0);
-	av = NULL;
+	//if (ac != 1)
+	//	return (0);
+	//av = NULL;
 	data = ms_init_data(env);
-	while (!data.exit)
+	data.ac = ac;
+	if (ac > 1)
 	{
-		ft_printf("minishell > ");
-		ms_parse(&data);
-		if (data.args)
-		{
-			for (t_list *tmp = data.args; tmp; tmp = tmp->next)
-			{
-				ft_printf("node\n");
-				char **tmp2 = (char **)tmp->content;
-				for (int i = 0; tmp2[i]; i++)
-					ft_printf("arg[%d] = |%s|\n", i, tmp2[i]);
-			}
-			if (!ms_treat_line(&data))
-			{
-				ms_add_variable(&data);
-				ms_exec_line(&data);
-			}
-			ft_lstclear(&data.args, &ms_clear_node);
-			data.args = NULL;
-		}
+		data.to_supr = av + 1;
 	}
+	else
+		data.to_supr = NULL;
+	//while (!data.exit)
+	//{
+		//ft_printf("minishell > ");
+		ms_parsing(&data);
+		if (data.tokens)
+		{
+			ms_logic(&data);
+			ft_lstclear(&data.tokens, &ms_clear_node);
+			data.tokens = NULL;
+			ms_refresh_values(data);
+		}
+	//}
 	//free $ variable;
 	return (0);
 }

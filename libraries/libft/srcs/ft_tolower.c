@@ -6,13 +6,13 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 13:59:35 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/23 14:00:07 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 18:05:58 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int		ft_tolower(int c)
+int	ft_tolower(int c)
 {
 	if (65 <= c && c <= 90)
 		c += 32;

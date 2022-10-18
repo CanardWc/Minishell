@@ -6,18 +6,21 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 18:26:08 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/23 18:28:10 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 17:48:03 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int		ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
 	int	i;
 
 	i = 0;
 	while (lst)
-		(lst = lst->next, i++);
+	{
+		lst = lst->next;
+		i++;
+	}
 	return (i);
 }

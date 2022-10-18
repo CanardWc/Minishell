@@ -13,7 +13,6 @@ static char	*ms_find_path(char *av, char **true_env)
 			if (tmp == NULL)
 				ms_error();
 			tmp2 = ft_strjoin(tmp, av);
-			ft_printf("tmp2 = [%s]\n", tmp2); 
 			free(tmp);
 			tmp = NULL;
 			if (tmp2 == NULL)
@@ -40,9 +39,6 @@ void	ms_cmd_exec(t_data *data, char **line)
 		return ;
 	}
 	else if (execve(path, line, data->true_env) == -1)
-	{
-		ft_printf("oui\n");
 		ms_error();
-	}
 	free(path);
 }

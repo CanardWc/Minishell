@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 18:40:08 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/28 11:31:21 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 17:45:09 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	ret = dst;
 	while (lst)
 	{
-		if (!(dst = ft_lstnew(f(lst->content))))
+		dst = ft_lstnew(f(lst->content));
+		if (!dst)
 		{
 			ft_lstclear(&dst, (*del));
 			return (NULL);

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/09 18:07:25 by fgrea             #+#    #+#             */
+/*   Updated: 2021/11/09 18:09:12 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libftprintf.h>
 
-const t_form_f	g_form_fct[] = {
-	{'c', &ft_format_c}, {'s', &ft_format_s}, \
+const t_form_f	g_form_fct[] = {{'c', &ft_format_c}, {'s', &ft_format_s}, \
 	{'p', &ft_format_uint}, {'d', &ft_format_int}, \
 	{'i', &ft_format_int}, {'u', &ft_format_uint}, \
 	{'o', &ft_format_uint}, {'x', &ft_format_uint}, \

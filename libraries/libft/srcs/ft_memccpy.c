@@ -6,7 +6,7 @@
 /*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 12:39:23 by fgrea             #+#    #+#             */
-/*   Updated: 2020/11/28 15:14:48 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2021/11/09 17:48:48 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 		*d++ = *s++;
 	if (*s == (unsigned char)c)
 		*d = *s;
-	return (*s == c ? ++d : NULL);
+	if (*s == c)
+		return (++d);
+	return (NULL);
 }

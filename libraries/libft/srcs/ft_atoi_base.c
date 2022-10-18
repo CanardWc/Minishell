@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/09 17:32:48 by fgrea             #+#    #+#             */
+/*   Updated: 2021/11/09 17:32:50 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libft.h>
 
-int				ft_check(char *str)
+int	ft_check(char *str)
 {
 	int	i;
 
@@ -30,7 +42,7 @@ unsigned int	is_base(int s, char c, char *base)
 	return (s + 1);
 }
 
-int				ft_atoi_base(char *str, char *base)
+int	ft_atoi_base(char *str, char *base)
 {
 	unsigned int	s;
 	int				ret;
@@ -38,7 +50,8 @@ int				ft_atoi_base(char *str, char *base)
 
 	ret = 0;
 	i = 1;
-	if ((s = ft_strlen(base)) < 2 || ft_check(base))
+	s = ft_strlen(base);
+	if (s < 2 || ft_check(base))
 		return (ret);
 	while ((*str >= 9 && *str <= 13) || *str == 32)
 		str++;

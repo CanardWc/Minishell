@@ -15,5 +15,5 @@ void	ms_cmd_env(t_data *data, char **line)
 			ft_printf("%s=%s\n", ret->key, ret->value);
 			tmp=tmp->next;
 		}
-	data = 0;
+	data->exit_status = 0;
 }

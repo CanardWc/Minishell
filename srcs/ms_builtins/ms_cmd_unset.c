@@ -70,4 +70,5 @@ void		ms_cmd_unset(t_data *data, char **line)
 			ms_free_node(node);
 		}
 	}
+	data->exit_status = 0;
 }

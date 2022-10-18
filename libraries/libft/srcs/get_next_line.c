@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/09 18:06:28 by fgrea             #+#    #+#             */
+/*   Updated: 2022/05/12 13:26:14 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <libft.h>
 
@@ -27,7 +38,7 @@ int	la_norme_cette_sale_grande_tante(int fd, char **r, char **eol)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*r = NULL;
+	static char	*r;
 	ssize_t		read_ret;
 	char		*tmp;
 	char		*eol;
