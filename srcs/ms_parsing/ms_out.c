@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_out.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:15:46 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:29:02 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 /*
@@ -13,17 +25,17 @@ static int	ms_set_redir(char *s, int len, int indic, t_token *token)
 	file = ft_substr(s, 0, len);
 	if (!file)
 	{
-		ft_printf("ms_error : %s\n", strerror(errno));
+		printf("ms_error : %s\n", strerror(errno));
 		return (-1);
 	}
 	if (!indic)
-		token->red_out = open(file, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+		token->red_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else
-		token->red_out = open(file, O_RDWR | O_CREAT | O_APPEND, S_IRWXU);
+		token->red_out = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	free(file);
 	if (token->red_out == -1)
 	{
-		ft_printf("ms_error : %s\n", strerror(errno));
+		printf("ms_error : %s\n", strerror(errno));
 		return (-1);
 	}
 	return (0);
@@ -37,8 +49,8 @@ static int	ms_set_redir(char *s, int len, int indic, t_token *token)
 int	ms_out(char *line, t_token *token)
 {
 	char	*tmp;
-	int	indic;
-	int	len;
+	int		indic;
+	int		len;
 
 	indic = 0;
 	len = 0;

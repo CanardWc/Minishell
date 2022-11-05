@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_cmd_exec.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:11:56 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:29:02 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static char	*ms_find_path(char *av, char **true_env)
@@ -35,7 +47,7 @@ void	ms_cmd_exec(t_data *data, char **line)
 	path = ms_find_path(*line, data->true_env);
 	if (path == NULL)
 	{
-		ft_printf("minishell: %s: command not found\n", *line);
+		printf("minishell: %s: command not found\n", *line);
 		return ;
 	}
 	else if (execve(path, line, data->true_env) == -1)

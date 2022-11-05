@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_flush_variables.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:15:18 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:15:28 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	ms_check_exist(char *line)
@@ -12,11 +24,11 @@ static int	ms_check_exist(char *line)
 	return (ret);
 }
 
-void		ms_flush_variables(t_token *token)
+void	ms_flush_variables(t_token *token)
 {
 	char	**cmds;
 	char	**new;
-	int	l;
+	int		l;
 
 	l = 0;
 	cmds = token->cmds;

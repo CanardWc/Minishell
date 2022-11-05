@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_replace_variables.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:20:54 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:20:59 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static char	**ms_free_cmds(char **cmds)
@@ -12,7 +24,8 @@ static char	*ms_find_value(t_data *data, char *line, int len)
 {
 	t_list	*tmp;
 
-	ft_printf("line = [%s], len = [%d]\n", line, len);
+	if (len == 0)
+		return (NULL);
 	if (!ft_strcmp("?", line))
 		return (ft_itoa(data->exit_status));
 	tmp = data->env;
@@ -34,7 +47,7 @@ static char	*ms_find_value(t_data *data, char *line, int len)
 
 static int	ms_refresh_line(t_data *data, char **line, int start)
 {
-	int	len;
+	int		len;
 	char	*value;
 	char	*ret;
 	char	*tmp;
@@ -61,29 +74,48 @@ static int	ms_refresh_line(t_data *data, char **line, int start)
 	return (0);
 }
 
-char		**ms_replace_variables(t_data *data, char **cmds)
+static int	ms_find_variable(char *src)
+{
+	int	pin;
+	int	qts;
+
+	pin = 0;
+	qts = 0;
+	while (src[pin])
+	{
+		if (src[pin] == '$')
+			if (src[pin + 1] && !(src[pin + 1] == '\"' && qts))
+				if (src[pin + 1] != ' ' && src[pin + 1] != '\t')
+					return (pin);
+		if (src[pin] == '\"' && !qts)
+			qts = 1;
+		else if (src[pin] == '\"' && qts)
+			qts = 0;
+		if (src[pin] == '\'')
+			while (src[++pin] != '\'')
+				;
+		pin++;
+	}
+	return (-1);
+}
+
+char	**ms_replace_variables(t_data *data, char **cmds)
 {
 	char	**tmp;
-	int	i;
+	int		pin;
 
+	pin = -1;
 	tmp = cmds;
 	while (*tmp)
 	{
-		i = 0;
-		while ((*tmp)[i])
+		pin = ms_find_variable(*tmp);
+		if (pin >= 0)
 		{
-			if ((*tmp)[i] == '\'')
-			{
-				while ((*tmp)[++i] != '\'')
-					;
-				i++;
-			}
-			if ((*tmp)[i] && (*tmp)[i] == '$')
-				if (ms_refresh_line(data, tmp, i))
-					return (ms_free_cmds(cmds));
-			i++;
+			if (ms_refresh_line(data, tmp, pin))
+				return (ms_free_cmds(cmds));
 		}
-		tmp++;
+		else
+			tmp++;
 	}
 	return (cmds);
 }

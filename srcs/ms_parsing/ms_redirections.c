@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_redirections.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:20:24 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:29:02 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	ms_count_limit(char *line)
@@ -23,7 +35,7 @@ static int	ms_del_redir(char **line)
 {
 	char	*tmp;
 	char	*ret;
-	int	len;
+	int		len;
 
 	tmp = *line;
 	ret = *line;
@@ -59,7 +71,7 @@ static int	ms_exist(char **line)
 				;
 			if (!**line || ft_strchr("<>", **line))
 			{
-				ft_printf("syntax error near unexpected token '%c'\n", **line);
+				printf("syntax error near unexpected token '%c'\n", **line);
 				return (-1);
 			}
 			*line = indic;

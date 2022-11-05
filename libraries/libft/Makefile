@@ -21,35 +21,7 @@ SRC_NAME = ft_atoi.c ft_strdup.c ft_bzero.c ft_putnbr_fd.c ft_strjoin.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
 		ft_lstmap.c ft_putmem_fd.c ft_putnbr_base_fd.c ft_atoi_base.c \
 		ft_abs.c ft_swap.c get_next_line.c \
-		ft_printf/ft_printf.c \
-		ft_printf/utils/ft_search.c \
-		ft_printf/utils/ft_round_dbl.c \
-		ft_printf/utils/double/ft_getdbl.c \
-		ft_printf/utils/double/ft_getdbl_exponent.c \
-		ft_printf/utils/double/ft_getdbl_fraction.c \
-		ft_printf/utils/double/ft_dbl_case_f.c \
-		ft_printf/utils/double/ft_dbl_case_e.c \
-		ft_printf/ft_format_functions/ft_format_c.c \
-		ft_printf/ft_format_functions/ft_format_s.c \
-		ft_printf/ft_format_functions/ft_format_int.c \
-		ft_printf/ft_format_functions/ft_format_uint.c  \
-		ft_printf/ft_format_functions/ft_format_percent.c \
-		ft_printf/ft_format_functions/ft_format_f.c \
-		ft_printf/ft_format_functions/ft_format_e.c \
-		ft_printf/ft_format_functions/ft_format_g.c \
-		ft_printf/ft_format_functions/ft_format_n.c \
-		ft_printf/ft_flag_functions/ft_flag_min.c \
-		ft_printf/ft_flag_functions/ft_flag_number.c \
-		ft_printf/ft_flag_functions/ft_flag_asterisk.c \
-		ft_printf/ft_flag_functions/ft_flag_hash.c \
-		ft_printf/ft_flag_functions/ft_flag_plus.c \
-		ft_printf/ft_flag_functions/ft_flag_spc.c \
-		ft_printf/ft_flag_functions/ft_flag_zero.c \
-		ft_printf/ft_flag_functions/ft_flag_prec.c \
-		ft_printf/ft_flag_functions/ft_format_h_int.c \
-		ft_printf/ft_flag_functions/ft_format_h_uint.c \
-		ft_printf/ft_flag_functions/ft_format_hh_int.c \
-		ft_printf/ft_flag_functions/ft_format_hh_uint.c
+
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

@@ -10,11 +10,14 @@ OBJ_PATH = ./objs/
 INC_PATH = ./includes/
 SRC_PATH = ./srcs/
 
+RL_LIB = -L$(shell brew --prefix readline)/lib
+RL_INC = -I$(shell brew --prefix readline)/include
+
 LFT_NAME = libft.a
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = minishell.h
 SRC_NAME = minishell.c ms_utils/ms_clear_node.c \
-	   ms_parsing/ms_parsing.c \
+	   ms_parsing/ms_parsing.c ms_signal.c \
 	   ms_parsing/ms_pipes.c ms_parsing/ms_redirections.c \
 	   ms_parsing/ms_in.c ms_parsing/ms_out.c \
 	   ms_utils/ms_build_env.c ms_utils/ft_subsubstr.c \
@@ -38,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LFT_PATH)
-	@$(CC) -o $@ -L $(LFT_PATH) -lft $^
+	@$(CC) -fsanitize=address -g3 -o $@ -L $(LFT_PATH) -lft $^ $(RL_INC) $(RL_LIB) -lreadline
 	@echo "Obj folder & files created"
 	@echo "Executable created"
 	@echo "Compilation finished"
@@ -46,7 +49,7 @@ $(NAME): $(OBJ)
 $(OBJ): | $(OBJ_PATH)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@$(CC) $(C_FLAGS) $(INC) $(LFT_INC) -o $@ -c $<
+	@$(CC) $(C_FLAGS)  -fsanitize=address -g3 $(INC) $(LFT_INC) -o $@ -c $< $(RL_INC)
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true

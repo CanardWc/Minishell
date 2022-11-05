@@ -1,22 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_in.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:15:31 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:29:02 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	ms_heredoc(char *file)
 {
 	char	*line;
-	int	fd;
+	int		fd;
 
 	line = NULL;
-	fd = open(".heredoc", O_CREAT | O_RDWR, S_IRWXU);
+	g_position_handler = READLINE;
+	fd = open("/tmp/.heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 		return (-1);
 	while (ft_strcmp(file, line))
 	{
-		ft_printf(">");
-		if (get_next_line(0, &line) < 0)
-			return (-1);
+		if (line)
+			free(line);
+		line = readline(">");
 		if (ft_strcmp(file, line))
-			ft_putstr_fd(line, fd);
+			ft_putendl_fd(line, fd);
+		if (!line)
+			break ;
 	}
+	free(line);
+	line = NULL;
+	close(fd);
+	fd = open("/tmp/.heredoc", O_CREAT | O_RDONLY, 0644);
 	return (fd);
 }
 
@@ -29,7 +48,7 @@ static int	ms_set_redir(char *s, int len, int indic, t_token *token)
 	file = ft_substr(s, 0, len);
 	if (!file)
 	{
-		ft_printf("ms_error : %s\n", strerror(errno));
+		printf("ms_error : %s\n", strerror(errno));
 		return (-1);
 	}
 	if (!indic)
@@ -38,7 +57,7 @@ static int	ms_set_redir(char *s, int len, int indic, t_token *token)
 		token->red_in = ms_heredoc(file);
 	if (token->red_in == -1)
 	{
-		ft_printf("ms_error: %s: %s\n", file, strerror(errno));
+		printf("ms_error: %s: %s\n", file, strerror(errno));
 		free(file);
 		return (-1);
 	}
@@ -54,8 +73,8 @@ static int	ms_set_redir(char *s, int len, int indic, t_token *token)
 int	ms_in(char *line, t_token *token)
 {
 	char	*tmp;
-	int	indic;
-	int	len;
+	int		indic;
+	int		len;
 
 	indic = 0;
 	len = 0;

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_subsubstr.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:21:20 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:21:23 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 char	*ft_subsubstr(char *s, int start, int len)
 {
 	char	*ret;
 	char	*tmp;
-	int	i;
+	int		i;
 
 	if (!s || !*s)
 		return (NULL);

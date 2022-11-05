@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:21:07 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:21:15 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static size_t	ft_arr_size(const char *s)
@@ -23,7 +35,7 @@ static size_t	ft_arr_size(const char *s)
 
 static int	ms_count_line(const char *s)
 {
-	int	i;
+	int		i;
 	char	c;
 
 	i = 0;
@@ -40,11 +52,11 @@ static int	ms_count_line(const char *s)
 	return (i);
 }
 
-char		**ms_split(const char *s)
+char	**ms_split(const char *s)
 {
 	char	**ret;
 	char	**arr;
-	int	i;
+	int		i;
 
 	if (!s)
 		return (0);

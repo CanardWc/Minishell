@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_remove_quotes.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/04 15:58:04 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:20:46 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	ms_recreate_line(char **line, int l)
@@ -18,15 +30,17 @@ static int	ms_recreate_line(char **line, int l)
 		else
 			*str++ = *tmp++;
 	}
+	*str = 0;
+	free(*line);
 	*line = ret;
 	return (0);
 }
 
-int		ms_remove_quotes(char **cmds)
+int	ms_remove_quotes(char **cmds)
 {
 	char	**tmp;
-	int	i;
-	int	l;
+	int		i;
+	int		l;
 
 	tmp = cmds;
 	while (*tmp)

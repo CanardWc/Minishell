@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_logic.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:13:46 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:14:49 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 //GERER LES SIGNAUX DE RETOURS POUR LE $?
@@ -16,9 +28,9 @@ static void	ms_std_in_and_out(t_list *tokens, int fd[2], int *fd_sync)
 
 static int	ms_fork(t_data *data, t_list *tkn, int fd_sync)
 {
-	int	fd[2];
+	int		fd[2];
 	pid_t	pid;
-	int	status;
+	int		status;
 
 	if (pipe(fd))
 		return (-1);
@@ -32,21 +44,26 @@ static int	ms_fork(t_data *data, t_list *tkn, int fd_sync)
 		exit (data->exit_status);
 	}
 	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		ms_signal_handler(WTERMSIG(status));
+	if (WTERMSIG(status) == SIGINT)
+		data->exit_status = 130;
+	else if (WTERMSIG(status) == SIGQUIT)
+		data->exit_status = 131;
 	data->exit_status = WEXITSTATUS(status);
 	close(fd_sync);
-	close(fd[1]);
-	return (fd[0]);
+	return (close(fd[1]) * 0 + fd[0]);
 }
 
-void		ms_logic(t_data *data)
+void	ms_logic(t_data *data)
 {
-	int	fd_sync;
+	int		fd_sync;
 	t_list	*tkn;
 
 	fd_sync = dup(0);
 	tkn = data->tokens;
 	if (!data->pipe_count)
-		return(ms_find_cmd(data, (t_token *)(tkn->content)));
+		return (ms_find_cmd(data, (t_token *)(tkn->content)));
 	while (tkn)
 	{
 		fd_sync = ms_fork(data, tkn, fd_sync);

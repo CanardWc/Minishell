@@ -1,14 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:21:41 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:27:37 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 void	ms_error(void)
 {
-	ft_printf("ms_error : %s\n", strerror(errno));
+	printf("ms_error : %s\n", strerror(errno));
 	exit(0);
 }
 
 static t_data	ms_init_data(char **env)
 {
-	t_data	data;
+	t_data				data;
+	struct sigaction	s_action;
 
 	data.pipe_count = 0;
 	data.std_in = dup(0);
@@ -19,6 +32,11 @@ static t_data	ms_init_data(char **env)
 	data.var = NULL;
 	data.exit_status = 0;
 	data.exit = 0;
+	s_action.sa_handler = ms_signal_handler;
+	s_action.sa_mask = 0;
+	s_action.sa_flags = 0;
+	sigaction(SIGQUIT, &s_action, NULL);
+	sigaction(SIGINT, &s_action, NULL);
 	return (data);
 }
 
@@ -30,25 +48,19 @@ static void	ms_refresh_values(t_data data)
 	dup(data.std_out);
 }
 
-int		main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	//if (ac != 1)
-	//	return (0);
-	//av = NULL;
+	if (ac != 1)
+		return (0);
+	av = NULL;
+	g_position_handler = MAIN;
 	data = ms_init_data(env);
-	data.ac = ac;
-	if (ac > 1)
+	while (!data.exit)
 	{
-		data.to_supr = av + 1;
-	}
-	else
-		data.to_supr = NULL;
-	//while (!data.exit)
-	//{
-		//ft_printf("minishell > ");
-		ms_parsing(&data);
+		if (ms_parsing(&data))
+			break ;
 		if (data.tokens)
 		{
 			ms_logic(&data);
@@ -56,7 +68,6 @@ int		main(int ac, char **av, char **env)
 			data.tokens = NULL;
 			ms_refresh_values(data);
 		}
-	//}
-	//free $ variable;
-	return (0);
+	}
+	return (data.exit_status);
 }

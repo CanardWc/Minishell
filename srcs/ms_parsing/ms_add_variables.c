@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_add_variables.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:14:55 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:15:15 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static t_env	*ms_new_var(char *src)
 {
 	t_env	*new;
 	char	*mark;
-	
+
 	mark = ft_strchr(src, '=');
 	new = (t_env *)malloc(sizeof(t_env));
 	new->key = ft_substr(src, 0, mark - src);
@@ -60,12 +72,12 @@ static void	ms_adding(t_data *data, char **cmds)
 		cmds++;
 	}
 }
-					     
-void		ms_add_variables(t_data *data, t_token *token)
+
+void	ms_add_variables(t_data *data, t_token *token)
 {
 	char	**cmds;
 	char	*line;
-	int	check;
+	int		check;
 
 	check = 0;
 	cmds = token->cmds;

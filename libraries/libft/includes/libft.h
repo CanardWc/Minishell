@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrea <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 11:08:28 by fgrea             #+#    #+#             */
-/*   Updated: 2021/11/09 17:30:03 by fgrea            ###   ########lyon.fr   */
+/*   Updated: 2022/11/05 06:27:21 by fgrea            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "libftprintf.h"
+# include <fcntl.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 

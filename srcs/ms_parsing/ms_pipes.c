@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_pipes.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:20:07 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:20:21 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 /*
@@ -31,7 +43,7 @@ static char	**ms_fill_ret(char **ret, char *line)
 {
 	char	**tmp_arr;
 	char	*tmp_line;
-	
+
 	tmp_arr = ret;
 	tmp_line = line;
 	while (*tmp_line)
@@ -40,7 +52,7 @@ static char	**ms_fill_ret(char **ret, char *line)
 			tmp_line = strchr(tmp_line + 1, *tmp_line);
 		if (*tmp_line == '|')
 		{
-			*tmp_arr++ = ft_strtrim( \
+			*tmp_arr++ = ft_strtrim(\
 				ft_substr(line, 0, tmp_line - line), " ");
 			if (!*(tmp_arr - 1))
 				return (ms_pipe_error(1, 0, ret));
@@ -64,7 +76,7 @@ static char	**ms_fill_ret(char **ret, char *line)
 static int	ms_count_pipes(char *line)
 {
 	char	*tmp;
-	int	pipe_count;
+	int		pipe_count;
 
 	pipe_count = 0;
 	tmp = line;
@@ -119,7 +131,7 @@ static char	ms_quotes(char *line)
  * 	NULL;
  */
 
-char		**ms_pipes(t_data *data, char *line)
+char	**ms_pipes(t_data *data, char *line)
 {
 	char	**ret;
 	char	*tmp;

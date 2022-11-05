@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_cmd_unset.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:13:05 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:13:12 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static void	ms_free_node(t_list *node)
@@ -51,7 +63,7 @@ static t_list	*ms_search_node(t_list *lst, char *str)
 	return (0);
 }
 
-void		ms_cmd_unset(t_data *data, char **line)
+void	ms_cmd_unset(t_data *data, char **line)
 {
 	t_list	*node;
 

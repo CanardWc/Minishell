@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_find_cmd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fgrea <fgrea@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 06:13:18 by fgrea             #+#    #+#             */
+/*   Updated: 2022/11/05 06:13:42 by fgrea            ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-const t_cmds	g_cmds[] = {
-	{"echo", &ms_cmd_echo}, {"cd", &ms_cmd_cd}, \
+static const t_cmds	g_cmds[] = {
+{"echo", &ms_cmd_echo}, {"cd", &ms_cmd_cd}, \
 	{"pwd", &ms_cmd_pwd}, {"export", &ms_cmd_export}, \
 	{"unset", &ms_cmd_unset}, {"env", &ms_cmd_env}, \
 	{"exit", &ms_cmd_exit}, {"exec", &ms_cmd_exec}};
@@ -20,11 +32,11 @@ static void	ms_set_redir(t_token token)
 	}
 }
 
-void		ms_find_cmd(t_data *data, t_token *token)
+void	ms_find_cmd(t_data *data, t_token *token)
 {
-	int	status;
+	int		status;
 	pid_t	child;
-	int	k;
+	int		k;
 
 	if (!token->cmds || !*(token->cmds) || !**(token->cmds))
 		return ;
